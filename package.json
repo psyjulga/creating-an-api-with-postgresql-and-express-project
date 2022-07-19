@@ -1,16 +1,16 @@
 {
 	"name": "storefront_backend",
 	"version": "0.1.0",
-	"description": "",
+	"description": "final udacity backend project",
 	"main": "server.ts",
 	"scripts": {
 		"start": "node src/server.ts",
 		"watch": "tsc-watch --esModuleInterop src/server.ts --outDir ./dist --onSuccess \"node ./dist/server.js\"",
-		"test": " ",
+		"test": "jest",
 		"tsc": "tsc",
 		"db": "docker-compose up"
 	},
-	"author": "Udacity",
+	"author": "Ladybug, Udacity",
 	"license": "ISC",
 	"dependencies": {
 		"bcrypt": "^5.0.1",
@@ -28,6 +28,7 @@
 		"db-migrate": "^0.11.13",
 		"db-migrate-pg": "^1.2.2",
 		"dotenv": "^16.0.1",
+		"jest": "^28.1.3",
 		"ts-node": "^9.1.1",
 		"tsc-watch": "^4.2.9"
 	}

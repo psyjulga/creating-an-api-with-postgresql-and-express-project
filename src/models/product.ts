@@ -36,7 +36,7 @@ export class ProductStore {
 		try {
 			const conn = await client.connect()
 			const sql =
-				'INSERT INTO products (product_id, name, price) VALUES (default, $2, $3) RETURNING *'
+				'INSERT INTO products (product_id, name, price) VALUES (default, $1, $2) RETURNING *'
 			// !!!!!!
 			// maybe syntax error - "default"
 			const res = await conn.query(sql, [name, price])

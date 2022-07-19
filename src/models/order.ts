@@ -38,7 +38,7 @@ export class OrderStore {
 			const conn = await client.connect()
 			const sql =
 				// default syntax !!
-				'INSERT INTO orders (order_id, status, user_id) VALUES (default,$2,$3) RETURNING *'
+				'INSERT INTO orders (order_id, status, user_id) VALUES (default,$1,$2) RETURNING *'
 			const res = await conn.query(sql, [status, user_id])
 			conn.release()
 			return res.rows[0]
