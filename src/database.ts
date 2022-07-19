@@ -1,8 +1,10 @@
 import dotenv from 'dotenv'
 import { Pool } from 'pg'
 
-dotenv.config() // evtl weglassen weil es schin in server.ts ist?
-
+dotenv.config()
+// evtl weglassen weil es schon in server.ts ist?
+// aber tests starten den server nicht, aber brauchen
+// die db connection
 const {
 	POSTGRES_URL,
 	POSTGRES_DB,
@@ -12,7 +14,7 @@ const {
 	ENV,
 } = process.env
 
-console.log('postgres db in database.ts: ', POSTGRES_DB)
+console.log('ENV in database.ts: ', ENV)
 
 const client = new Pool({
 	host: POSTGRES_URL,
