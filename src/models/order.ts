@@ -20,15 +20,15 @@ export class OrderStore {
 		}
 	}
 
-	async show(orderId: string): Promise<Order> {
+	async show(order_id: string): Promise<Order> {
 		try {
 			const conn = await client.connect()
 			const sql = 'SELECT * FROM orders WHERE id=($1)'
-			const res = await conn.query(sql, [orderId])
+			const res = await conn.query(sql, [order_id])
 			conn.release()
 			return res.rows[0]
 		} catch (e) {
-			throw new Error(`Error in OrderStore(${orderId}): ${e}`)
+			throw new Error(`Error in OrderStore(${order_id}): ${e}`)
 		}
 	}
 

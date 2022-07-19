@@ -18,15 +18,15 @@ export class ProductStore {
 			throw new Error(`Error in ProductStore index(): ${e}`)
 		}
 	}
-	async show(productId: string): Promise<Product> {
+	async show(product_id: string): Promise<Product> {
 		try {
 			const conn = await client.connect()
 			const sql = 'SELECT * FROM products WHERE id=($1)'
-			const res = await conn.query(sql, [productId])
+			const res = await conn.query(sql, [product_id])
 			conn.release()
 			return res.rows[0]
 		} catch (e) {
-			throw new Error(`Error in ProductStore show(${productId}): ${e}`)
+			throw new Error(`Error in ProductStore show(${product_id}): ${e}`)
 		}
 	}
 	async create(product: Product): Promise<Product> {
