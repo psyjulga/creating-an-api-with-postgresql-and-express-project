@@ -37,7 +37,7 @@ describe('Product Model', () => {
 	})
 
 	test('show method should return the correct product', async () => {
-		const res = await testStore.show('123')
+		const res = await testStore.show('1')
 		expect(res).toEqual(testProductWithId)
 	})
 })
