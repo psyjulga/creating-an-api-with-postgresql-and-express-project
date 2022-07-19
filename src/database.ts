@@ -1,7 +1,7 @@
 import dotenv from 'dotenv'
 import { Pool } from 'pg'
 
-dotenv.config()
+dotenv.config() // evtl weglassen weil es schin in server.ts ist?
 
 const {
 	POSTGRES_URL,
