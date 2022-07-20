@@ -72,7 +72,7 @@ export class OrderStore {
 		// check if order status is 'active'
 		// so that you cannot add products to completed orders
 		try {
-			const ordersql = 'SELECT * FROM orders WHERE id=($1)'
+			const ordersql = 'SELECT * FROM orders WHERE order_id=($1)'
 			const conn = await client.connect()
 
 			const result = await conn.query(ordersql, [order_id])

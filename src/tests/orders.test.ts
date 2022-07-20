@@ -91,7 +91,7 @@ describe('Order Model', () => {
 		expect(res).toEqual(ordersProductsWithId)
 	})
 
-	test('showOrderByUser method should return the corrct order', async () => {
+	test('showOrderByUser method should return the correct order', async () => {
 		const res = await orderStore.showOrderByUser('1')
 		expect(res).toEqual(testOrderWithId)
 	})

@@ -27,7 +27,7 @@ export class UserStore {
 		// add TOKEN !!
 		try {
 			const conn = await client.connect()
-			const sql = 'SELECT * FROM products WHERE id=($1)'
+			const sql = 'SELECT * FROM products WHERE user_id=($1)'
 			const res = await conn.query(sql, [user_id])
 			conn.release()
 			return res.rows[0]
@@ -62,7 +62,7 @@ export class UserStore {
 		}
 	}
 
-	// where / how to use that !!
+	// where / how to use that !! => login
 	async authenticate(
 		user_id: string,
 		password_digest: string
@@ -71,11 +71,9 @@ export class UserStore {
 		const sql = 'SELECT password_digest FROM users WHERE user_id=($1)'
 
 		const result = await conn.query(sql, [user_id])
-		console.log(password_digest + pepper)
 
 		if (result.rows.length) {
 			const user = result.rows[0]
-			console.log(user)
 
 			if (bcrypt.compareSync(password_digest + pepper, user.password_digest)) {
 				return user

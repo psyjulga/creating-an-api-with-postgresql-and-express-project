@@ -8,7 +8,7 @@ const testProductToAdd: Product = {
 }
 // product_id is automatically generated
 const testProductWithId: Product = {
-	product_id: '1',
+	product_id: 1,
 	name: 'test-product-1',
 	price: 500,
 }
