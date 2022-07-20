@@ -7,6 +7,13 @@ export type Order = {
 	// references users table
 }
 
+export type OrdersProducts = {
+	id?: string
+	quantity: number
+	order_id: number
+	product_id: number
+}
+
 export class OrderStore {
 	async index(): Promise<Order[]> {
 		try {
@@ -23,12 +30,25 @@ export class OrderStore {
 	async show(order_id: string): Promise<Order> {
 		try {
 			const conn = await client.connect()
-			const sql = 'SELECT * FROM orders WHERE id=($1)'
+			const sql = 'SELECT * FROM orders WHERE order_id=($1)'
 			const res = await conn.query(sql, [order_id])
 			conn.release()
 			return res.rows[0]
 		} catch (e) {
-			throw new Error(`Error in OrderStore(${order_id}): ${e}`)
+			throw new Error(`Error in OrderStore show(${order_id}): ${e}`)
+		}
+	}
+
+	async showOrderByUser(user_id: string): Promise<Order> {
+		// token !!
+		try {
+			const conn = await client.connect()
+			const sql = 'SELECT * FROM orders WHERE user_id=($1)'
+			const res = await conn.query(sql, [user_id])
+			conn.release()
+			return res.rows[0]
+		} catch (e) {
+			throw new Error(`Error in OrderStore showOrderByUser(${user_id}): ${e}`)
 		}
 	}
 
@@ -47,12 +67,8 @@ export class OrderStore {
 		}
 	}
 
-	async addProductToOrder(
-		id: string,
-		quantity: number,
-		order_id: number,
-		product_id: number
-	): Promise<Order> {
+	async addProductToOrder(orders_products: OrdersProducts): Promise<Order> {
+		const { quantity, order_id, product_id } = orders_products
 		// check if order status is 'active'
 		// so that you cannot add products to completed orders
 		try {
