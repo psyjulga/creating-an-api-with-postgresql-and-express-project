@@ -11,7 +11,6 @@ export type User = {
 
 export class UserStore {
 	async index(): Promise<User[]> {
-		// add TOKEN !!
 		try {
 			const conn = await client.connect()
 			const sql = 'SELECT * FROM users'
@@ -24,7 +23,6 @@ export class UserStore {
 	}
 
 	async show(user_id: string): Promise<User> {
-		// add TOKEN !!
 		try {
 			const conn = await client.connect()
 			const sql = 'SELECT * FROM products WHERE user_id=($1)'
@@ -36,9 +34,8 @@ export class UserStore {
 		}
 	}
 
+	// SIGN UP => password hashing
 	async create(user: User): Promise<User> {
-		// sign up => token
-		// add TOKEN !!
 		const { first_name, last_name, password_digest } = user
 		try {
 			const conn = await client.connect()
@@ -62,7 +59,7 @@ export class UserStore {
 		}
 	}
 
-	// where / how to use that !! => login
+	// SIGN IN => check password
 	async authenticate(
 		user_id: string,
 		password_digest: string

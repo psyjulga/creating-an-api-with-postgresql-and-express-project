@@ -1,6 +1,7 @@
-import { UserStore, User } from '../models/user'
-import { Application, NextFunction, Request, Response } from 'express'
+import { Application, Request, Response } from 'express'
 import jwt from 'jsonwebtoken'
+import { UserStore, User } from '../models/user'
+import verifyAuthToken from '../util/authorization'
 
 const store = new UserStore()
 
@@ -26,9 +27,8 @@ const show = async (req: Request, res: Response) => {
 	}
 }
 
+// SIGN UP => token created
 const create = async (req: Request, res: Response) => {
-	// a new user is created ('sign up') => new password => TOKEN (jwt.sign())
-
 	const user: User = {
 		first_name: req.body.first_name,
 		last_name: req.body.last_name,
@@ -36,7 +36,7 @@ const create = async (req: Request, res: Response) => {
 	}
 
 	try {
-		const newUser = await store.create(user)
+		const newUser = await store.create(user) // with hashed password
 		const token = jwt.sign(
 			{ user: newUser },
 			process.env.TOKEN_SECRET as string
@@ -49,12 +49,12 @@ const create = async (req: Request, res: Response) => {
 	}
 }
 
-// checks at sign in if password is correct
+// SIGN IN => token created
 const authenticate = async (req: Request, res: Response) => {
 	try {
 		const authenticatedUser = await store.authenticate(
 			req.params.id, // user id
-			req.body.password_digest // entered password
+			req.body.password_digest // entered password => checks if correct
 		)
 		const token = jwt.sign(
 			{ user: authenticatedUser },
@@ -68,28 +68,11 @@ const authenticate = async (req: Request, res: Response) => {
 	}
 }
 
-// EXPRESS MIDDLEWARE FUNCTION => where to put it ??!!
-const verifyAuthToken = (req: Request, res: Response, next: NextFunction) => {
-	try {
-		const authorizationHeader = req.headers.authorization
-		const token = authorizationHeader?.split(' ')[1]
-		const tokenSecret = process.env.TOKEN_SECRET
-		const decoded = jwt.verify(token as string, tokenSecret as string)
-
-		next()
-	} catch (error) {
-		res.status(401)
-	}
-}
-
 const user_routes = (app: Application) => {
-	app.get('/users', index)
-	app.get('/users/:id', show)
+	app.get('/users', verifyAuthToken, index)
+	app.get('/users/:id', verifyAuthToken, show)
 	app.post('/users', verifyAuthToken, create)
 	app.get('users/:id/authenticate', authenticate)
 }
-
-// => verifyAuthToken will be called
-//    before the handler's create method
 
 export default user_routes
