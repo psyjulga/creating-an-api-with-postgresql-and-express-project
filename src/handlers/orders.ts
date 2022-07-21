@@ -4,18 +4,36 @@ import { OrdersProducts, OrderStore } from '../models/order'
 const store = new OrderStore()
 
 const index = async (_req: Request, res: Response) => {
-	const orders = await store.index()
-	res.json(orders)
+	try {
+		const orders = await store.index()
+		res.status(200)
+		res.json(orders)
+	} catch (e) {
+		res.status(400)
+		res.json(e)
+	}
 }
 
 const show = async (req: Request, res: Response) => {
-	const order = await store.show(req.params.id)
-	res.json(order)
+	try {
+		const order = await store.show(req.params.id)
+		res.status(200)
+		res.json(order)
+	} catch (e) {
+		res.status(400)
+		res.json(e)
+	}
 }
 
 const showOrderByUser = async (req: Request, res: Response) => {
-	const orderByUser = await store.showOrderByUser(req.params.id)
-	res.json(orderByUser)
+	try {
+		const orderByUser = await store.showOrderByUser(req.params.id)
+		res.status(200)
+		res.json(orderByUser)
+	} catch (e) {
+		res.status(400)
+		res.json(e)
+	}
 }
 
 const create = async (req: Request, res: Response) => {
@@ -25,6 +43,7 @@ const create = async (req: Request, res: Response) => {
 	}
 	try {
 		const newOrder = await store.create(order)
+		res.status(200)
 		res.json(newOrder)
 	} catch (e) {
 		res.status(400)
@@ -45,6 +64,7 @@ const addProductToOrder = async (req: Request, res: Response) => {
 
 	try {
 		const addedProduct = await store.addProductToOrder(productToAdd)
+		res.status(200)
 		res.json(addedProduct)
 	} catch (e) {
 		res.status(400)

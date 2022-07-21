@@ -1,15 +1,40 @@
 import { Product, ProductStore } from '../models/product'
+import request from 'supertest'
+import app from '../server'
+import { Server } from 'http'
 
+// testing endpoints => HANDLER
+const server: Server = app.listen()
+
+describe('Product Handler', () => {
+	test('POST /products/ calls create() and returns 200', async () => {
+		const res = await request(server)
+			.post('/products/')
+			.send({ name: 'route-test-product', price: 250 })
+		expect(res.status).toBe(200)
+	})
+	test('GET /products/ calls index() and returns 200', async () => {
+		const res = await request(server).get('/products/')
+		expect(res.status).toBe(200)
+	})
+	test('GET /products/:id calls show() and returns 200', async () => {
+		const res = await request(server).get('/products/1')
+		expect(res.status).toBe(200)
+		server.close()
+	})
+})
+
+// testing model-database-interaction => MODEL
 const testStore = new ProductStore()
 
 const testProductToAdd: Product = {
-	name: 'test-product-1',
+	name: 'model-test-product',
 	price: 500,
 }
 // product_id is automatically generated
 const testProductWithId: Product = {
 	product_id: 1,
-	name: 'test-product-1',
+	name: 'model-test-product',
 	price: 500,
 }
 

@@ -5,17 +5,29 @@ import jwt from 'jsonwebtoken'
 const store = new UserStore()
 
 const index = async (_req: Request, res: Response) => {
-	const users = await store.index()
-	res.json(users)
+	try {
+		const users = await store.index()
+		res.status(200)
+		res.json(users)
+	} catch (e) {
+		res.status(400)
+		res.json(e)
+	}
 }
 
 const show = async (req: Request, res: Response) => {
-	const user = await store.show(req.params.id)
-	res.json(user)
+	try {
+		const user = await store.show(req.params.id)
+		res.status(200)
+		res.json(user)
+	} catch (e) {
+		res.status(400)
+		res.json(e)
+	}
 }
 
 const create = async (req: Request, res: Response) => {
-	// when a new user is created ('sign up') => new password => TOKEN (jwt.sign())
+	// a new user is created ('sign up') => new password => TOKEN (jwt.sign())
 
 	const user: User = {
 		first_name: req.body.first_name,
@@ -29,10 +41,11 @@ const create = async (req: Request, res: Response) => {
 			{ user: newUser },
 			process.env.TOKEN_SECRET as string
 		)
+		res.status(200)
 		res.json(token)
 	} catch (e) {
 		res.status(400)
-		res.json((e as any) + user)
+		res.json(e)
 	}
 }
 
@@ -47,14 +60,15 @@ const authenticate = async (req: Request, res: Response) => {
 			{ user: authenticatedUser },
 			process.env.TOKEN_SECRET as string
 		)
+		res.status(200)
 		res.json(token)
 	} catch (e) {
-		res.status(401)
-		res.json({ e })
+		res.status(401) // 401 => not authenticated
+		res.json(e)
 	}
 }
 
-// EXPRESS MIDDLEWARE FUNCTION
+// EXPRESS MIDDLEWARE FUNCTION => where to put it ??!!
 const verifyAuthToken = (req: Request, res: Response, next: NextFunction) => {
 	try {
 		const authorizationHeader = req.headers.authorization

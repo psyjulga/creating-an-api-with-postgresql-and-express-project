@@ -27,3 +27,5 @@ product_routes(app)
 app.listen(port, function () {
 	console.log(`server running at: ${address}`)
 })
+
+export default app
