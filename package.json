@@ -4,11 +4,11 @@
 	"description": "final udacity backend project",
 	"main": "server.ts",
 	"scripts": {
-		"start": "ENV=dev tsc && node ./dist/server.js",
-		"watch": "ENV=dev tsc-watch --esModuleInterop src/server.ts --outDir ./dist --onSuccess \"node ./dist/server.js\"",
-		"test": "ENV=test db-migrate --env test down -c5 && db-migrate --env test up && jest && db-migrate db:drop test --config ./database.json",
-		"migrate-up": "ENV=dev db-migrate up --config ./database.json",
-		"migrate-down": "ENV=dev db-migrate down -c5 --config ./database.json",
+		"start": "tsc && node ./dist/server.js",
+		"watch": "tsc-watch --esModuleInterop src/server.ts --outDir ./dist --onSuccess \"node ./dist/server.js\"",
+		"test": "db-migrate --env test down -c5 && db-migrate --env test up && jest && db-migrate --env test down -c5 --config ./database.json",
+		"migrate-up": "db-migrate up --config ./database.json",
+		"migrate-down": "db-migrate down -c5 --config ./database.json",
 		"tsc": "tsc",
 		"db": "docker-compose up"
 	},
