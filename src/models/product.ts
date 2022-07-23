@@ -30,15 +30,11 @@ export class ProductStore {
 		}
 	}
 	async create(product: Product): Promise<Product> {
-		// TOKEN required
-		// in handler ?
 		const { name, price } = product
 		try {
 			const conn = await client.connect()
 			const sql =
 				'INSERT INTO products (product_id, name, price) VALUES (default, $1, $2) RETURNING *'
-			// !!!!!!
-			// maybe syntax error - "default"
 			const res = await conn.query(sql, [name, price])
 			conn.release()
 			return res.rows[0]

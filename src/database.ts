@@ -11,9 +11,10 @@ const {
 	POSTGRES_TEST_DB,
 	POSTGRES_USER,
 	POSTGRES_PASSWORD,
+	NODE_ENV,
 } = process.env
 
-let NODE_ENV
+// let NODE_ENV
 console.log('node_env in database.ts: ', NODE_ENV)
 
 const client = new Pool({

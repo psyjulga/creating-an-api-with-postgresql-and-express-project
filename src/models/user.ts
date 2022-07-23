@@ -3,7 +3,7 @@ import pepper from 'bcrypt'
 import client from '../database'
 
 export type User = {
-	user_id?: string
+	user_id?: number
 	first_name: string
 	last_name: string
 	password_digest: string
@@ -25,7 +25,7 @@ export class UserStore {
 	async show(user_id: string): Promise<User> {
 		try {
 			const conn = await client.connect()
-			const sql = 'SELECT * FROM products WHERE user_id=($1)'
+			const sql = 'SELECT * FROM users WHERE user_id=($1)'
 			const res = await conn.query(sql, [user_id])
 			conn.release()
 			return res.rows[0]

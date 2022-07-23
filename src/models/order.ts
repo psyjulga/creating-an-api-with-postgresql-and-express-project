@@ -1,9 +1,9 @@
 import client from '../database'
 
 export type Order = {
-	order_id?: string
+	order_id?: number
 	status: 'active' | 'complete'
-	user_id: number
+	user_id: string
 	// references users table
 }
 
@@ -40,7 +40,6 @@ export class OrderStore {
 	}
 
 	async showOrderByUser(user_id: string): Promise<Order> {
-		// token !!
 		try {
 			const conn = await client.connect()
 			const sql = 'SELECT * FROM orders WHERE user_id=($1)'
@@ -57,7 +56,6 @@ export class OrderStore {
 		try {
 			const conn = await client.connect()
 			const sql =
-				// default syntax !!
 				'INSERT INTO orders (order_id, status, user_id) VALUES (default,$1,$2) RETURNING *'
 			const res = await conn.query(sql, [status, user_id])
 			conn.release()

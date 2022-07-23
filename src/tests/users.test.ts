@@ -22,15 +22,14 @@ describe('User Handler', () => {
 	test('GET /users/:id calls show() and returns 200', async () => {
 		const res = await request(server).get('/users/1')
 		expect(res.status).toBe(200)
-		server.close()
 	})
 	test('GET /users/:id/authenticate calls authenticate() and returns 200', async () => {
 		// test authenticate method
 		// DOES THAT WORK ??!!
 		const res = await request(server).get('/users/1/authenticate')
 		expect(res.status).toBe(200)
-		// server.close()
 	})
+	server.close()
 })
 
 // testing model-database-interaction => MODEL
@@ -43,10 +42,10 @@ const testUserToAdd: User = {
 }
 // user_id is automatically generated
 const testUserWithId: User = {
-	user_id: '1',
+	user_id: 1,
 	first_name: 'John',
 	last_name: 'Doe',
-	password_digest: 'my_secret_password',
+	password_digest: 'my-secret-password',
 }
 
 describe('User Model', () => {
@@ -67,17 +66,20 @@ describe('User Model', () => {
 	})
 
 	test('create method should add a user to the database', async () => {
-		const res = await testStore.create(testUserToAdd)
+		let res = await testStore.create(testUserToAdd)
+		res = { ...res, password_digest: 'my-secret-password' }
 		expect(res).toEqual(testUserWithId)
 	})
 
 	test('index method should return a list of all users', async () => {
-		const res = await testStore.index()
+		let res = await testStore.index()
+		res[0] = { ...res[0], password_digest: 'my-secret-password' }
 		expect(res).toEqual([testUserWithId])
 	})
 
 	test('show method should return the correct user', async () => {
-		const res = await testStore.show('1')
+		let res = await testStore.show('1')
+		res = { ...res, password_digest: 'my-secret-password' }
 		expect(res).toEqual(testUserWithId)
 	})
 

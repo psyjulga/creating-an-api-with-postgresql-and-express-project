@@ -20,8 +20,8 @@ describe('Product Handler', () => {
 	test('GET /products/:id calls show() and returns 200', async () => {
 		const res = await request(server).get('/products/1')
 		expect(res.status).toBe(200)
-		server.close()
 	})
+	server.close()
 })
 
 // testing model-database-interaction => MODEL
@@ -34,7 +34,7 @@ const testProductToAdd: Product = {
 // product_id is automatically generated
 const testProductWithId: Product = {
 	product_id: 1,
-	name: 'model-test-product',
+	name: 'product-model-test-product',
 	price: 500,
 }
 
