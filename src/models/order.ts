@@ -1,17 +1,17 @@
 import client from '../database'
 
 export type Order = {
-	order_id?: number
+	order_id?: string | number
 	status: 'active' | 'complete'
 	user_id: string
 	// references users table
 }
 
 export type OrdersProducts = {
-	id?: string
+	id?: string | number
 	quantity: number
-	order_id: number
-	product_id: number
+	order_id: string
+	product_id: string
 }
 
 export class OrderStore {
@@ -56,7 +56,7 @@ export class OrderStore {
 		try {
 			const conn = await client.connect()
 			const sql =
-				'INSERT INTO orders (order_id, status, user_id) VALUES (default,$1,$2) RETURNING *'
+				'INSERT INTO orders (order_id, status, user_id) VALUES (default, $1, $2) RETURNING *'
 			const res = await conn.query(sql, [status, user_id])
 			conn.release()
 			return res.rows[0]
@@ -88,12 +88,11 @@ export class OrderStore {
 			throw new Error(`${e}`)
 		}
 		// we add a produt to an EXISTING ORDER
-		// for that we use the JOIN TABLE
-		// => orders_products
+		// for that we use the JOIN TABLE => orders_products
 		try {
 			const conn = await client.connect()
 			const sql =
-				'INSERT INTO order_products (id, quantity, order_id, product_id) VALUES(default, $1, $2, $3) RETURNING *'
+				'INSERT INTO orders_products (id, quantity, order_id, product_id) VALUES(default, $1, $2, $3) RETURNING *'
 			const res = await conn.query(sql, [quantity, order_id, product_id])
 			const order = res.rows[0]
 			conn.release()

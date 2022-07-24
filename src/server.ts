@@ -24,8 +24,10 @@ user_routes(app)
 order_routes(app)
 product_routes(app)
 
-app.listen(port, function () {
-	console.log(`server running at: ${address}`)
-})
+if (process.env.NODE_ENV !== 'test') {
+	app.listen(port, function () {
+		console.log(`server running at: ${address}`)
+	})
+}
 
 export default app

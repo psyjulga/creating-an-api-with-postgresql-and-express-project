@@ -42,8 +42,10 @@ const create = async (req: Request, res: Response) => {
 		status: req.body.status,
 		user_id: req.body.user_id,
 	}
+	console.log('from order handler create: order:', order)
 	try {
 		const newOrder = await store.create(order)
+		console.log('from order handler create: newOrder:', order) // no order_id added ??
 		res.status(200)
 		res.json(newOrder)
 	} catch (e) {
@@ -54,8 +56,8 @@ const create = async (req: Request, res: Response) => {
 
 const addProductToOrder = async (req: Request, res: Response) => {
 	const quantity: number = parseInt(req.body.quantity)
-	const order_id: number = parseInt(req.params.id)
-	const product_id: number = parseInt(req.body.product_id)
+	const order_id: string = req.params.id
+	const product_id: string = req.body.product_id
 
 	const productToAdd: OrdersProducts = {
 		quantity,
@@ -75,10 +77,10 @@ const addProductToOrder = async (req: Request, res: Response) => {
 
 const order_routes = (app: Application) => {
 	app.get('/orders', verifyAuthToken, index)
-	app.get('orders/:id', verifyAuthToken, show)
-	app.get('orders/:id/users', verifyAuthToken, showOrderByUser)
+	app.get('/orders/:id', verifyAuthToken, show)
+	app.get('/orders/:id/users', verifyAuthToken, showOrderByUser)
 	app.post('/orders', verifyAuthToken, create)
-	app.post('/order/:id/products', verifyAuthToken, addProductToOrder)
+	app.post('/orders/:id/products', verifyAuthToken, addProductToOrder)
 }
 
 export default order_routes
