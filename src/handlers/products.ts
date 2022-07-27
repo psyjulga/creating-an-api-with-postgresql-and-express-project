@@ -31,10 +31,8 @@ const create = async (req: Request, res: Response) => {
 		name: req.body.name,
 		price: req.body.price,
 	}
-
 	try {
 		const newProduct = await store.create(product)
-		console.log('from handler - newProduct: ', newProduct)
 		res.status(200)
 		res.json(newProduct)
 	} catch (e) {
@@ -45,7 +43,7 @@ const create = async (req: Request, res: Response) => {
 
 const product_routes = (app: Application) => {
 	app.get('/products', index)
-	app.get('products/:id', show)
+	app.get('/products/:id', show)
 	app.post('/products', verifyAuthToken, create)
 }
 

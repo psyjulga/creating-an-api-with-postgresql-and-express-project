@@ -64,18 +64,28 @@ export class UserStore {
 		user_id: string,
 		password_digest: string
 	): Promise<User | null> {
-		const conn = await client.connect()
-		const sql = 'SELECT password_digest FROM users WHERE user_id=($1)'
+		try {
+			const conn = await client.connect()
+			const sql = 'SELECT password_digest FROM users WHERE user_id=($1)'
 
-		const result = await conn.query(sql, [user_id])
+			const res = await conn.query(sql, [user_id])
 
-		if (result.rows.length) {
-			const user = result.rows[0]
-
-			if (bcrypt.compareSync(password_digest + pepper, user.password_digest)) {
-				return user
+			if (res.rows.length) {
+				const passwordFromUser = res.rows[0]
+				if (
+					bcrypt.compareSync(
+						password_digest + pepper,
+						passwordFromUser.password_digest
+					)
+				) {
+					return passwordFromUser
+				}
 			}
+			return null
+		} catch (e) {
+			throw new Error(
+				`Error in UserStore authenticate(${user_id},${password_digest}): ${e}`
+			)
 		}
-		return null
 	}
 }

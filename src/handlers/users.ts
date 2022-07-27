@@ -72,7 +72,7 @@ const user_routes = (app: Application) => {
 	app.get('/users', verifyAuthToken, index)
 	app.get('/users/:id', verifyAuthToken, show)
 	app.post('/users', verifyAuthToken, create)
-	app.get('users/:id/authenticate', authenticate)
+	app.get('/users/:id/authenticate', authenticate)
 }
 
 export default user_routes

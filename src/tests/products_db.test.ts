@@ -1,38 +1,6 @@
 // import { Product, ProductStore } from '../models/product'
-// import request from 'supertest'
-// import app from '../server'
-// import { Server } from 'http'
 // import clearDatabase from '../util/clearDatabase'
 
-// // testing endpoints => HANDLER
-// const server: Server = app.listen(() => console.log('server running for tests'))
-
-// describe('Product Handler', () => {
-// 	afterAll(async () => {
-// 		await clearDatabase('DELETE FROM products WHERE price=250')
-// 	})
-//   // ??
-// 	// product is successfully passed to handler, but returns 400
-// 	// ??
-// 	test('POST /products/ calls create() and returns 200', async () => {
-// 		const res = await request(server)
-// 			.post('/products')
-// 			.send({ name: 'product-route-test-product', price: 250 })
-// 		expect(res.status).toBe(200)
-// 	})
-// 	test('GET /products/ calls index() and returns 200', async () => {
-// 		const res = await request(server).get('/products/')
-// 		expect(res.status).toBe(200)
-// 	})
-// 	test('GET /products/:id calls show() and returns 200', async () => {
-// 		const res = await request(server).get('/products/1')
-// 		expect(res.status).toBe(200)
-// 	})
-
-// 	server.close()
-// })
-
-// // testing model-database-interaction => MODEL
 // const testStore = new ProductStore()
 
 // const testProductToAdd: Product = {

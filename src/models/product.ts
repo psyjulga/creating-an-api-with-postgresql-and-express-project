@@ -31,6 +31,7 @@ export class ProductStore {
 	}
 	async create(product: Product): Promise<Product> {
 		const { name, price } = product
+
 		try {
 			const conn = await client.connect()
 			const sql =
