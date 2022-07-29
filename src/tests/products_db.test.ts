@@ -1,48 +1,71 @@
-// import { Product, ProductStore } from '../models/product'
-// import clearDatabase from '../util/clearDatabase'
+import { Product, ProductStore } from '../models/product'
+import clearDatabase from '../util/clearDatabase'
+import populateDatabase from '../util/populateDatabase'
 
-// const testStore = new ProductStore()
+const store = new ProductStore()
 
-// const testProductToAdd: Product = {
-// 	name: 'product-model-test-prod',
-// 	price: 500,
-// }
-// // product_id is automatically generated
-// const testProductWithId: Product = {
-// 	product_id: 1,
-// 	name: 'product-model-test-prod',
-// 	price: 500,
-// }
+const testProductToAdd: Product = {
+	// will be populated in the tests
+	name: 'product-model-test-prod',
+	price: 500,
+}
+const populatedTestProduct = {
+	// is populated by populateDatabase
+	product_id: 1,
+	name: 'populated product',
+	price: 100,
+}
 
-// describe('Product Model', () => {
-// 	afterAll(async () => {
-// 		await clearDatabase('DELETE FROM products WHERE price=500')
-// 	})
+const testProductWithId: Product = {
+	// will be used for comparison
+	product_id: 2, // product_id is automatically generated
+	name: 'product-model-test-prod',
+	price: 500,
+}
 
-// 	test('should have an index method', () => {
-// 		expect(testStore.index).toBeDefined()
-// 	})
+describe('Product Model', () => {
+	beforeAll(async () => {
+		await clearDatabase()
+		await populateDatabase()
+	})
 
-// 	test('should have a show method', () => {
-// 		expect(testStore.show).toBeDefined()
-// 	})
+	afterAll(async () => {
+		await clearDatabase()
+	})
 
-// 	test('should have a create method', () => {
-// 		expect(testStore.create).toBeDefined()
-// 	})
+	test('should have an index method', () => {
+		expect(store.index).toBeDefined()
+	})
 
-// 	test('create method should add a product to the database', async () => {
-// 		const res = await testStore.create(testProductToAdd)
-// 		expect(res).toEqual(testProductWithId)
-// 	})
+	test('should have a show method', () => {
+		expect(store.show).toBeDefined()
+	})
 
-// 	test('index method should return a list of all products', async () => {
-// 		const res = await testStore.index()
-// 		expect(res).toEqual([testProductWithId])
-// 	})
+	test('should have a create method', () => {
+		expect(store.create).toBeDefined()
+	})
 
-// 	test('show method should return the correct product', async () => {
-// 		const res = await testStore.show('1')
-// 		expect(res).toEqual(testProductWithId)
-// 	})
-// })
+	test('create method should add a product to the database', async () => {
+		//@ts-ignore
+		await new Promise((resolve) => setTimeout(() => resolve(), 2000))
+
+		const res = await store.create(testProductToAdd)
+		expect(res).toEqual(testProductWithId)
+	})
+
+	test('index method should return a list of all products', async () => {
+		//@ts-ignore
+		await new Promise((resolve) => setTimeout(() => resolve(), 2000))
+
+		const res = await store.index()
+		expect(res).toEqual([populatedTestProduct, testProductWithId])
+	})
+
+	test('show method should return the correct product', async () => {
+		//@ts-ignore
+		await new Promise((resolve) => setTimeout(() => resolve(), 2000))
+
+		const res = await store.show('1')
+		expect(res).toEqual(populatedTestProduct)
+	})
+})

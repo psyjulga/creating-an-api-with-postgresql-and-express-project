@@ -11,34 +11,39 @@ export type User = {
 
 export class UserStore {
 	async index(): Promise<User[]> {
+		let conn
 		try {
-			const conn = await client.connect()
+			conn = await client.connect()
 			const sql = 'SELECT * FROM users'
 			const res = await conn.query(sql)
-			conn.release()
 			return res.rows
 		} catch (e) {
 			throw new Error(`Error in UserStore index(): ${e}`)
+		} finally {
+			conn?.release()
 		}
 	}
 
 	async show(user_id: string): Promise<User> {
+		let conn
 		try {
-			const conn = await client.connect()
+			conn = await client.connect()
 			const sql = 'SELECT * FROM users WHERE user_id=($1)'
 			const res = await conn.query(sql, [user_id])
-			conn.release()
 			return res.rows[0]
 		} catch (e) {
 			throw new Error(`Error in UserStore show(${user_id}): ${e}`)
+		} finally {
+			conn?.release()
 		}
 	}
 
 	// SIGN UP => password hashing
 	async create(user: User): Promise<User> {
 		const { first_name, last_name, password_digest } = user
+		let conn
 		try {
-			const conn = await client.connect()
+			conn = await client.connect()
 			const sql =
 				'INSERT INTO users (user_id, first_name, last_name, password_digest) VALUES(default, $1, $2, $3) RETURNING *'
 
@@ -50,12 +55,11 @@ export class UserStore {
 
 			const res = await conn.query(sql, [first_name, last_name, hash])
 			const user = res.rows[0]
-
-			conn.release()
-
 			return user
 		} catch (e) {
 			throw new Error(`Error in UserStore create(...): ${e}`)
+		} finally {
+			conn?.release()
 		}
 	}
 
@@ -64,8 +68,9 @@ export class UserStore {
 		user_id: string,
 		password_digest: string
 	): Promise<User | null> {
+		let conn
 		try {
-			const conn = await client.connect()
+			conn = await client.connect()
 			const sql = 'SELECT password_digest FROM users WHERE user_id=($1)'
 
 			const res = await conn.query(sql, [user_id])
@@ -86,6 +91,12 @@ export class UserStore {
 			throw new Error(
 				`Error in UserStore authenticate(${user_id},${password_digest}): ${e}`
 			)
+		} finally {
+			conn?.release()
 		}
+	}
+
+	closeClient() {
+		client.end()
 	}
 }

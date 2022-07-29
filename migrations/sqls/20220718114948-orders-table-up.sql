@@ -3,3 +3,4 @@ CREATE TABLE orders (
   status VARCHAR(15),
   user_id bigint REFERENCES users(user_id)
 );
+

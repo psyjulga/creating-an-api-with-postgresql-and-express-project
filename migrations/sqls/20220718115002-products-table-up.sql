@@ -3,3 +3,4 @@ CREATE TABLE products (
   name VARCHAR(25) NOT NULL,
   price integer NOT NULL
 );
+

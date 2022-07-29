@@ -1,38 +1,45 @@
-// import request from 'supertest'
-// import app from '../server'
-// import { Server } from 'http'
-// import clearDatabase from '../util/clearDatabase'
+import request from 'supertest'
+import app from '../server'
+import { Server } from 'http'
+import clearDatabase from '../util/clearDatabase'
+import populateDatabase from '../util/populateDatabase'
 
-// const server: Server = app.listen()
+let server: Server
 
-// describe('User Handler', () => {
-// 	afterAll(async () => {
-// 		await clearDatabase('DELETE FROM users WHERE user_id IS NOT NULL')
-// 		await server.close()
-// 	})
+describe('User Handler', () => {
+	beforeAll(async () => {
+		server = app.listen()
+		await clearDatabase()
+		await populateDatabase()
+	})
 
-// 	test('POST /users/ calls create() and returns 200', async () => {
-// 		const res = await request(server).post('/users/').send({
-// 			first_name: 'User Handler Send',
-// 			last_name: 'Doe',
-// 			password_digest: 'handler-test-password',
-// 		})
+	afterAll(async () => {
+		await clearDatabase()
+		server.close()
+	})
 
-// 		expect(res.status).toBe(200)
-// 	})
-// 	test('GET /users/ calls index() and returns 200', async () => {
-// 		const res = await request(server).get('/users/')
-// 		expect(res.status).toBe(200)
-// 	})
-// 	test('GET /users/:id calls show() and returns 200', async () => {
-// 		const res = await request(server).get('/users/1')
-// 		expect(res.status).toBe(200)
-// 	})
-// 	test('GET /users/:id/authenticate calls authenticate() and returns 200', async () => {
-// 		const res = await request(server)
-// 			.get('/users/1/authenticate')
-// 			.send({ password_digest: 'handler-test-password' })
+	test('POST /users/ calls create() and returns 200', async () => {
+		const res = await request(server).post('/users/').send({
+			first_name: 'User Handler Send',
+			last_name: 'Doe',
+			password_digest: 'handler-test-password',
+		})
 
-// 		expect(res.status).toBe(200)
-// 	})
-// })
+		expect(res.status).toBe(200)
+	})
+	test('GET /users/ calls index() and returns 200', async () => {
+		const res = await request(server).get('/users/')
+		expect(res.status).toBe(200)
+	})
+	test('GET /users/:id calls show() and returns 200', async () => {
+		const res = await request(server).get('/users/1')
+		expect(res.status).toBe(200)
+	})
+	test('GET /users/:id/authenticate calls authenticate() and returns 200', async () => {
+		const res = await request(server)
+			.get('/users/2/authenticate')
+			.send({ password_digest: 'handler-test-password' })
+
+		expect(res.status).toBe(200)
+	})
+})

@@ -4,3 +4,4 @@ CREATE TABLE users (
   last_name VARCHAR(25),
   password_digest VARCHAR
 );
+
