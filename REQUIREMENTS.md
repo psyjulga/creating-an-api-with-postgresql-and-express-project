@@ -24,26 +24,26 @@
 
 #### Products
 
-- product_id _SERIAL PRIMARY KEY_
+- product*id \_SERIAL PRIMARY KEY*
 - name _VARCHAR(25) NOT NULL_
 - price _integer NOT NULL_
 
 #### Users
 
-- user_id _SERIAL PRIMARY KEY_
-- first_name _VARCHAR(25)_
-- last_name _VARCHAR(25)_
-- password_digest _VARCHAR_
+- user*id \_SERIAL PRIMARY KEY*
+- first*name \_VARCHAR(25)*
+- last*name \_VARCHAR(25)*
+- password*digest \_VARCHAR*
 
 #### Orders
 
-- order_id _SERIAL PRIMARY KEY_
+- order*id \_SERIAL PRIMARY KEY*
 - status _VARCHAR(15)_ => active / complete
-- user_id _bigint REFERENCES users(user_id)_ => **foreign key**
+- user*id \_bigint REFERENCES users(user_id)* => **foreign key**
 
-### Order_Products => Join Table
+#### Order_Products => Join Table
 
 - id _SERIAL PRIMARY KEY_
 - quantity _integer_
-- order_id _bigint REFERENCES orders(order_id)_ => \*_foreign key_
-- product_id _bigint REFERENCES products(product_id)_ => \*_foreign key_
+- order*id \_bigint REFERENCES orders(order_id)* => **foreign key**
+- product*id \_bigint REFERENCES products(product_id)* => **foreign key**
