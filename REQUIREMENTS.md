@@ -17,7 +17,7 @@
 
 - Index [GET] `/orders` => **token required**
 - Show [GET] `/orders/:id` => **token required**
-- Show by current Order [GET] `/orders/:id/users` => **token required**
+- Show by current User [GET] `/orders/:id/users` => **token required**
 - Create [POST] `/orders` => **token required**
 - Add Product to Order [POST] `orders/:id/products` => **token required**
 
