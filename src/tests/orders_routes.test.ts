@@ -1,25 +1,11 @@
 import request from 'supertest'
 import app from '../server'
 import { Server } from 'http'
-import clearDatabase from '../util/clearDatabase'
-import populateDatabase from '../util/populateDatabase'
-import { OrderStore } from '../models/order'
 
-const store = new OrderStore()
 let server: Server
 
 describe('Order Handler', () => {
-	beforeAll(async () => {
-		server = app.listen()
-		await clearDatabase()
-		await populateDatabase()
-	})
-
-	afterAll(async () => {
-		server.close()
-		await clearDatabase()
-		// store.closeClient()
-	})
+	server = app.listen()
 
 	test('POST orders/ calls create() and returns 200', async () => {
 		const res = await request(server).post('/orders/').send({
@@ -47,4 +33,6 @@ describe('Order Handler', () => {
 		})
 		expect(res.status).toBe(200)
 	})
+
+	server.close()
 })

@@ -4,3 +4,5 @@ CREATE TABLE products (
   price integer NOT NULL
 );
 
+INSERT INTO products (product_id, name, price) VALUES (default, 'populated product', 100)
+

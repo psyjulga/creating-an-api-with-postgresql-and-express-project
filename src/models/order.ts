@@ -73,7 +73,9 @@ export class OrderStore {
 		}
 	}
 
-	async addProductToOrder(orders_products: OrdersProducts): Promise<Order> {
+	async addProductToOrder(
+		orders_products: OrdersProducts
+	): Promise<OrdersProducts> {
 		const { quantity, order_id, product_id } = orders_products
 		let conn
 		// check if order status is 'active'

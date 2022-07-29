@@ -6,7 +6,7 @@
 	"scripts": {
 		"start": "tsc && node ./dist/server.js",
 		"watch": "tsc-watch --esModuleInterop src/server.ts --outDir ./dist --onSuccess \"node ./dist/server.js\"",
-		"test": "db-migrate --env test down -c5 && db-migrate --env test up && jest --runInBand --detectOpenHandles && db-migrate --env test down -c5 --config ./database.json",
+		"test": "db-migrate --env test up && jest --runInBand --detectOpenHandles && db-migrate --env test down -c5 --config ./database.json",
 		"migrate-up": "db-migrate up --config ./database.json",
 		"migrate-down": "db-migrate down -c5 --config ./database.json",
 		"tsc": "tsc",

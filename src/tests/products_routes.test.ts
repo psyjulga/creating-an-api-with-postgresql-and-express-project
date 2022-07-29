@@ -1,22 +1,11 @@
 import request from 'supertest'
 import app from '../server'
 import { Server } from 'http'
-import clearDatabase from '../util/clearDatabase'
-import populateDatabase from '../util/populateDatabase'
 
 let server: Server
 
 describe('Product Handler', () => {
-	beforeAll(async () => {
-		server = app.listen()
-		await clearDatabase()
-		await populateDatabase()
-	})
-
-	afterAll(async () => {
-		await clearDatabase()
-		server.close()
-	})
+	server = app.listen()
 
 	test('POST /products/ calls create() and returns 200', async () => {
 		const res = await request(server)
@@ -32,4 +21,6 @@ describe('Product Handler', () => {
 		const res = await request(server).get('/products/1')
 		expect(res.status).toBe(200)
 	})
+
+	server.close()
 })

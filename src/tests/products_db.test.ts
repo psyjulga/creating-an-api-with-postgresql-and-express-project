@@ -1,38 +1,15 @@
 import { Product, ProductStore } from '../models/product'
-import clearDatabase from '../util/clearDatabase'
-import populateDatabase from '../util/populateDatabase'
 
 const store = new ProductStore()
 
-const testProductToAdd: Product = {
-	// will be populated in the tests
-	name: 'product-model-test-prod',
-	price: 500,
-}
 const populatedTestProduct = {
-	// is populated by populateDatabase
+	// is inserted into the database via the test command
 	product_id: 1,
 	name: 'populated product',
 	price: 100,
 }
 
-const testProductWithId: Product = {
-	// will be used for comparison
-	product_id: 2, // product_id is automatically generated
-	name: 'product-model-test-prod',
-	price: 500,
-}
-
 describe('Product Model', () => {
-	beforeAll(async () => {
-		await clearDatabase()
-		await populateDatabase()
-	})
-
-	afterAll(async () => {
-		await clearDatabase()
-	})
-
 	test('should have an index method', () => {
 		expect(store.index).toBeDefined()
 	})
@@ -46,13 +23,24 @@ describe('Product Model', () => {
 	})
 
 	test('create method should add a product to the database', async () => {
+		const testProductToAdd: Product = {
+			name: 'product-model-test-prod',
+			price: 500,
+		}
+
 		const res = await store.create(testProductToAdd)
-		expect(res).toEqual(testProductWithId)
+		const { product_id, name, price } = res
+
+		expect(typeof product_id).toBe('number')
+		expect(name).toBe('product-model-test-prod')
+		expect(price).toBe(500)
 	})
 
 	test('index method should return a list of all products', async () => {
 		const res = await store.index()
-		expect(res).toEqual([populatedTestProduct, testProductWithId])
+
+		expect(res.length).toBeGreaterThanOrEqual(1)
+		expect(res[0]).toEqual(populatedTestProduct)
 	})
 
 	test('show method should return the correct product', async () => {

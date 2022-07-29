@@ -42,10 +42,9 @@ const create = async (req: Request, res: Response) => {
 		status: req.body.status,
 		user_id: req.body.user_id,
 	}
-	console.log('from order handler create: order:', order)
+
 	try {
 		const newOrder = await store.create(order)
-		console.log('from order handler create: newOrder:', order) // no order_id added ??
 		res.status(200)
 		res.json(newOrder)
 	} catch (e) {

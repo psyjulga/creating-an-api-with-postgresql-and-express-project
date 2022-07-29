@@ -4,3 +4,4 @@ CREATE TABLE orders (
   user_id bigint REFERENCES users(user_id)
 );
 
+INSERT INTO orders (order_id, status, user_id) VALUES (default, 'active', 1)

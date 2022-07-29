@@ -5,3 +5,4 @@ CREATE TABLE users (
   password_digest VARCHAR
 );
 
+INSERT INTO users (user_id, first_name, last_name, password_digest) VALUES (default, 'first name', 'last name', 'a password')
