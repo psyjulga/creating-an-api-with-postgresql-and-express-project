@@ -31,6 +31,7 @@ const create = async (req: Request, res: Response) => {
 		name: req.body.name,
 		price: req.body.price,
 	}
+	console.log('product in handler: ', product)
 	try {
 		const newProduct = await store.create(product)
 		res.status(200)

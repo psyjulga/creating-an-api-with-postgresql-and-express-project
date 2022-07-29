@@ -71,7 +71,7 @@ const authenticate = async (req: Request, res: Response) => {
 const user_routes = (app: Application) => {
 	app.get('/users', verifyAuthToken, index)
 	app.get('/users/:id', verifyAuthToken, show)
-	app.post('/users', verifyAuthToken, create)
+	app.post('/users', create)
 	app.get('/users/:id/authenticate', authenticate)
 }
 

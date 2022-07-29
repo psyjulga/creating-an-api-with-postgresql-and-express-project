@@ -9,8 +9,9 @@ const verifyAuthToken = (req: Request, res: Response, next: NextFunction) => {
 			const token = authorizationHeader?.split(' ')[1]
 			const tokenSecret = process.env.TOKEN_SECRET
 			const decoded = jwt.verify(token as string, tokenSecret as string)
-			next()
+			return next()
 		} catch (e) {
+			console.log(e)
 			res.status(403) // not authorized
 			res.json(e)
 		}

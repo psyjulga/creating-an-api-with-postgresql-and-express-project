@@ -35,6 +35,7 @@ export class ProductStore {
 	}
 	async create(product: Product): Promise<Product> {
 		const { name, price } = product
+		console.log('name, price: ', name, price)
 		let conn
 		try {
 			conn = await client.connect()
@@ -43,6 +44,7 @@ export class ProductStore {
 			const res = await conn.query(sql, [name, price])
 			return res.rows[0]
 		} catch (e) {
+			console.log('Error in ProductStore create: ', e)
 			throw new Error(`Error in ProductStore create(${name}): ${e}`)
 		} finally {
 			conn?.release()

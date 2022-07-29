@@ -10,7 +10,8 @@
 
 - Index [GET] `/users` => **token required**
 - Show [GET] `/users/:id` => **token required**
-- Create [POST] `/users` => **token required**
+- Create [POST] `/users` => SIGN UP
+- Authenticate [GET] `users/:id/authenticate` => SIGN IN
 
 #### Orders
 
