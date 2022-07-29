@@ -46,25 +46,16 @@ describe('Product Model', () => {
 	})
 
 	test('create method should add a product to the database', async () => {
-		//@ts-ignore
-		await new Promise((resolve) => setTimeout(() => resolve(), 2000))
-
 		const res = await store.create(testProductToAdd)
 		expect(res).toEqual(testProductWithId)
 	})
 
 	test('index method should return a list of all products', async () => {
-		//@ts-ignore
-		await new Promise((resolve) => setTimeout(() => resolve(), 2000))
-
 		const res = await store.index()
 		expect(res).toEqual([populatedTestProduct, testProductWithId])
 	})
 
 	test('show method should return the correct product', async () => {
-		//@ts-ignore
-		await new Promise((resolve) => setTimeout(() => resolve(), 2000))
-
 		const res = await store.show('1')
 		expect(res).toEqual(populatedTestProduct)
 	})

@@ -56,33 +56,21 @@ describe('Order Model', () => {
 	})
 
 	test('create method should add an order to the database', async () => {
-		//@ts-ignore
-		await new Promise((resolve) => setTimeout(() => resolve(), 2000))
-
 		const res = await store.create(testOrderToAdd)
 		expect(res).toEqual(testOrderWithId)
 	})
 
 	test('index method should return a list of all orders', async () => {
-		//@ts-ignore
-		await new Promise((resolve) => setTimeout(() => resolve(), 2000))
-
 		const res = await store.index()
 		expect(res).toEqual([populatedTestOrder, testOrderWithId])
 	})
 
 	test('show method should return the correct order', async () => {
-		//@ts-ignore
-		await new Promise((resolve) => setTimeout(() => resolve(), 2000))
-
 		const res = await store.show('2')
 		expect(res).toEqual(testOrderWithId)
 	})
 
 	test('showOrderByUser method should return the current order', async () => {
-		//@ts-ignore
-		await new Promise((resolve) => setTimeout(() => resolve(), 2000))
-
 		const res = await store.showOrderByUser('1')
 		expect(res).toEqual(populatedTestOrder)
 	})
@@ -100,9 +88,6 @@ describe('Order Model', () => {
 			order_id: '1',
 			product_id: '1',
 		}
-
-		//@ts-ignore
-		await new Promise((resolve) => setTimeout(() => resolve(), 2000))
 
 		const res = await store.addProductToOrder(ordersProductsToAdd)
 		expect(res).toEqual(ordersProductsWithId)

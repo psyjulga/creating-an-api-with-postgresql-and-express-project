@@ -53,18 +53,12 @@ describe('User Model', () => {
 	})
 
 	test('create method should add a user to the database', async () => {
-		//@ts-ignore
-		await new Promise((resolve) => setTimeout(() => resolve(), 2000))
-
 		const res = await store.create(testUserToAdd)
 		const user = { ...res, password_digest: 'my-secret-password' }
 		expect(user).toEqual(testUserWithId)
 	})
 
 	test('index method should return a list of all users', async () => {
-		//@ts-ignore
-		await new Promise((resolve) => setTimeout(() => resolve(), 2000))
-
 		let res = await store.index()
 		res[0] = { ...res[0], password_digest: 'a password' }
 		res[1] = { ...res[1], password_digest: 'my-secret-password' }
@@ -72,18 +66,12 @@ describe('User Model', () => {
 	})
 
 	test('show method should return the correct user', async () => {
-		//@ts-ignore
-		await new Promise((resolve) => setTimeout(() => resolve(), 2000))
-
 		const res = await store.show('1')
 		const user = { ...res, password_digest: 'a password' }
 		expect(user).toEqual(populatedTestUser)
 	})
 
 	test('authenticate method should check the password at login and return it', async () => {
-		//@ts-ignore
-		await new Promise((resolve) => setTimeout(() => resolve(), 2000))
-
 		const res = await store.authenticate('2', 'my-secret-password')
 		const password = res?.password_digest
 
