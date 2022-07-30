@@ -1,22 +1,8 @@
 version: '3.9'
 
 services:
-  node:
-    image: 'node:16'
-    user: 'node'
-    working_dir: /home/node/app
-    environment:
-      - NODE_ENV=dev
-    volumes:
-      - ./:/home/node/app
-    expose:
-      - '3000'
-    depends_on:
-      - postgres
-    command: 'npm start'
-
   postgres:
-    container_name: postgres2
+    container_name: postgres_container
     image: postgres
     ports:
       - '5432:5432'
@@ -25,28 +11,6 @@ services:
     volumes:
       - postgres:/var/lib/postgresql/data
       - ./db-init:/docker-entrypoint-initdb.d
-    networks:
-      - postgres
-
-  pgadmin:
-    links:
-      - postgres:postgres
-    container_name: pgadmin2
-    image: dpage/pgadmin4
-    ports:
-      - '8080:80'
-    depends_on:
-      - postgres
-    volumes:
-      - /tmp/pgadmin:/root/.pgadmin
-    env_file:
-      - .env
-    networks:
-      - postgres
-
-networks:
-  postgres:
-    driver: bridge
 
 volumes:
   postgres:
