@@ -8,7 +8,7 @@
 3. Create a user and the databases via psql commands and grant privileges:
 
 ```
-   CREATE USER admin WITH PASSWORD '12345';
+   CREATE USER admin WITH PASSWORD 'admin';
    CREATE DATABASE storefront;
    CREATE DATABASE storefront_test;
    GRANT ALL PRIVILEGES ON DATABASE storefront TO admin;
@@ -33,7 +33,7 @@
 - POSTGRES_URL=localhost
 - POSTGRES_PORT=5432
 - POSTGRES_USER=admin
-- POSTGRES_PASSWORD=12345
+- POSTGRES_PASSWORD=admin
 - POSTGRES_DB=storefront
 - POSTGRES_TEST_DB=storefront_test
 - SERVER_PORT=3000
