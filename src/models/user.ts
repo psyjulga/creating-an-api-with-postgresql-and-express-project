@@ -96,7 +96,7 @@ export class UserStore {
 		}
 	}
 
-	closeClient() {
-		client.end()
+	async closeClient() {
+		await client.end()
 	}
 }

@@ -73,5 +73,7 @@ describe('Order Model', () => {
 		expect(quantity).toBe(5)
 		expect(order_id).toBe('1')
 		expect(product_id).toBe('1')
+
+		await store.closeClient()
 	})
 })

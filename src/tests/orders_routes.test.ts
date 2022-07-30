@@ -1,7 +1,9 @@
 import request from 'supertest'
 import app from '../server'
 import { Server } from 'http'
+import { OrderStore } from '../models/order'
 
+const store = new OrderStore()
 let server: Server
 
 describe('Order Handler', () => {
@@ -32,6 +34,8 @@ describe('Order Handler', () => {
 			product_id: 1,
 		})
 		expect(res.status).toBe(200)
+
+		await store.closeClient()
 	})
 
 	server.close()

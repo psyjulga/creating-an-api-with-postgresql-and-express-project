@@ -49,7 +49,7 @@ export class ProductStore {
 		}
 	}
 
-	closeClient() {
-		client.end()
+	async closeClient() {
+		await client.end()
 	}
 }

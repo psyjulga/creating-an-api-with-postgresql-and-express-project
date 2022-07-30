@@ -4,9 +4,9 @@ const store = new UserStore()
 
 const testUserToAdd: User = {
 	// will be populated in the tests
-	first_name: 'User Model Add',
+	first_name: 'John',
 	last_name: 'Doe',
-	password_digest: 'my-secret-password', // will be hashed
+	password_digest: 'secret-password', // will be hashed
 }
 const populatedTestUser = {
 	// is inserted into the database via the test command
@@ -38,9 +38,9 @@ describe('User Model', () => {
 		const { user_id, first_name, last_name, password_digest } = res
 
 		expect(typeof user_id).toBe('number')
-		expect(first_name).toBe('User Model Add')
+		expect(first_name).toBe('John')
 		expect(last_name).toBe('Doe')
-		expect(password_digest).not.toBe('my-secret-password')
+		expect(password_digest).not.toBe('secret-password')
 	})
 
 	test('index method should return a list of all users', async () => {
@@ -55,11 +55,13 @@ describe('User Model', () => {
 		expect(res).toEqual(populatedTestUser)
 	})
 
-	// test('authenticate method should check the password at login and return it', async () => {
-	// 	const res = await store.authenticate('2', 'my-secret-password')
-	// 	const password = res?.password_digest
+	test('authenticate method should check the password at login and return it', async () => {
+		const res = await store.authenticate('2', 'secret-password')
+		const password = res?.password_digest
 
-	// 	expect(typeof password).toBe('string')
-	// 	expect(password).not.toEqual('my-secret-password')
-	// })
+		expect(typeof password).toBe('string')
+		expect(password).not.toEqual('secret-password')
+
+		await store.closeClient()
+	})
 })

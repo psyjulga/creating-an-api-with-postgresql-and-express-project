@@ -1,7 +1,9 @@
 import request from 'supertest'
 import app from '../server'
 import { Server } from 'http'
+import { ProductStore } from '../models/product'
 
+const store = new ProductStore()
 let server: Server
 
 describe('Product Handler', () => {
@@ -20,6 +22,8 @@ describe('Product Handler', () => {
 	test('GET /products/:id calls show() and returns 200', async () => {
 		const res = await request(server).get('/products/1')
 		expect(res.status).toBe(200)
+
+		await store.closeClient()
 	})
 
 	server.close()
