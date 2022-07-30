@@ -2,11 +2,24 @@
 
 ## Instructions
 
-1. `npm install` to install all dependencies
-2. `npm run db` to load the postgres container with docker and initialize the databases
-3. `npm run migrate-up` to run the migrations to create the database tables
-4. `npm run watch` to compile to Typescript and start the server on **PORT 3000**
-5. `npm run test` to run the tests with jest
+1. Install all dependencies:
+   `npm install`
+2. Start Docker: `npm run db`
+3. Create a user and the databases via psql commands and grant privileges:
+
+```CREATE USER admin WITH PASSWORD '12345';
+   CREATE DATABASE storefront;
+   CREATE DATABASE storefront_test;
+   GRANT ALL PRIVILEGES ON DATABASE storefront TO admin;
+   GRANT ALL PRIVILEGES ON DATABASE storefront_test TO admin;
+```
+
+4. Run the migrations:
+   `npm run migrate-up`
+5. Compile to Typescript and start the server on **PORT 3000**:
+   `npm run watch`
+6. Run the tests with jest:
+   `npm run test`
 
 ## Routes and Database Schema
 
