@@ -7,7 +7,8 @@
 2. Start Docker: `npm run db`
 3. Create a user and the databases via psql commands and grant privileges:
 
-```CREATE USER admin WITH PASSWORD '12345';
+```
+   CREATE USER admin WITH PASSWORD '12345';
    CREATE DATABASE storefront;
    CREATE DATABASE storefront_test;
    GRANT ALL PRIVILEGES ON DATABASE storefront TO admin;
