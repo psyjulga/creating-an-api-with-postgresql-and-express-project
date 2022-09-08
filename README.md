@@ -1,5 +1,8 @@
 # Storefront Backend Project
 
+*My second backend project with the following task:*
+The company stakeholders want to create an online storefront to showcase their great product ideas. Users need to be able to browse an index of all products, see the specifics of a single product, and add products to an order that they can view in a cart page. You have been tasked with building the API that will support this application, and your coworker is building the frontend.
+
 ## Instructions
 
 1. Install all dependencies:
